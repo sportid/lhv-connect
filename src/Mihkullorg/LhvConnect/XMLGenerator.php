@@ -74,6 +74,7 @@ xsi:schemaLocation=\"urn:iso:std:iso:20022:tech:xsd:pain.001.001.03 pain.001.001
                 "PAYMENT_INFORMATION_IDENTIFICATION" => $payment['id'],
                 "PAYMENT_METHOD" => "TRF",
                 "INNER_NUMBER_OF_TRANSACTIONS" => 1,
+                "INNER_CONTROL_SUM" => $payment['sum'],
                 "REQUESTED_EXECUTION_DATE" => (new DateTime())->format("Y-m-d"),
                 "REMITTER" => [
                     "REMITTER_NAME" => $configuration['name'],
