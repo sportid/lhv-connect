@@ -4,8 +4,8 @@ namespace Mihkullorg\LhvConnect\Requests;
 
 use Mihkullorg\LhvConnect\XMLGenerator;
 
-class PaymentInitiationRequest extends FullRequest {
-
+class PaymentInitiationRequest extends FullRequest
+{
     protected $url = "payment";
     protected $method = "POST";
 
