@@ -11,8 +11,8 @@ use Mihkullorg\LhvConnect\Requests\PaymentInitiationRequest;
 use Mihkullorg\LhvConnect\Requests\RetrieveMessageFromInbox;
 use Psr\Http\Message\ResponseInterface;
 
-class LhvConnect {
-
+class LhvConnect
+{
     private $client;
     private $configuration;
 
@@ -52,12 +52,10 @@ class LhvConnect {
     {
         $messages = [];
 
-        while(true)
-        {
+        while (true) {
             $message = $this->makeRetrieveMessageFromInboxRequest();
 
-            if ( !isset($message->getHeaders()['Content-Length']) || $message->getHeader('Content-Length')[0] == 0)
-            {
+            if (!isset($message->getHeaders()['Content-Length']) || $message->getHeader('Content-Length')[0] == 0) {
                 break;
             }
 
@@ -103,28 +101,44 @@ class LhvConnect {
      * @param $payments
      * @return string
      */
-    public function getPaymentInitiationXML($payments)
+    public function getPaymentInitiationXML($payments, $timeZone = 'Europe/Tallinn')
     {
         $request = new PaymentInitiationRequest($this->client, $this->configuration, $payments);
 
-        return $request->getXML();
+        return $request->getXML($timeZone);
+    }
+
+    // Here for legacy purposes
+    public function makePaymentInitiationRequest(string $filePath)
+    {
+        return $this->makeSignedPaymentInitiationRequest($filePath);
+    }
+
+    public function makeSignedPaymentInitiationRequest(string $filePath)
+    {
+        return $this->sendPaymentInitiationRequest($filePath, 'application/vnd.etsi.asic-e+zip');
+    }
+
+    public function makeUnsignedPaymentInitiationRequest(string $filePath)
+    {
+        return $this->sendPaymentInitiationRequest($filePath, 'application/xml');
     }
 
     /**
-     * @param $ddoc
+     * @param $filePath
+     * @param $contentType
      * @return ResponseInterface
      */
-    public function makePaymentInitiationRequest($ddoc)
+    protected function sendPaymentInitiationRequest(string $filePath, string $contentType)
     {
-        $body = fopen($ddoc, 'r');
+        $body = fopen($filePath, 'r');
 
         $headers = [
-            'Content-Type' => 'application/vnd.etsi.asic-e+zip'
+            'Content-Type' => $contentType
         ];
 
         $request = new PaymentInitiationRequest($this->client, $this->configuration, [], $body, $headers);
 
         return $request->sendRequest();
     }
-
 }

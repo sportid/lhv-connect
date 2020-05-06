@@ -2,8 +2,8 @@
 
 namespace Mihkullorg\LhvConnect;
 
-class Tag {
-
+class Tag
+{
     const
         ACCOUNT = "Acct",
         ACCOUNT_IDENTIFICATION = "Id",
@@ -75,7 +75,5 @@ class Tag {
         PAYMENT_INITIATION_REQUEST = "CstmrCdtTrfInitn",
 
         ACCOUNT_STATEMENT_RESPONSE = "BkToCstmrStmt",
-        MERCHANT_REPORT_RESPONSE = "BkToCstmrDbtCdtNtfctn"
-    ;
-
+        MERCHANT_REPORT_RESPONSE = "BkToCstmrDbtCdtNtfctn";
 }

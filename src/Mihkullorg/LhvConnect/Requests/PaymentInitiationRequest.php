@@ -4,8 +4,8 @@ namespace Mihkullorg\LhvConnect\Requests;
 
 use Mihkullorg\LhvConnect\XMLGenerator;
 
-class PaymentInitiationRequest extends FullRequest {
-
+class PaymentInitiationRequest extends FullRequest
+{
     protected $url = "payment";
     protected $method = "POST";
 
@@ -14,9 +14,13 @@ class PaymentInitiationRequest extends FullRequest {
      *
      * @return string
      */
-    public function getXML()
+    public function getXML($timezone = 'Europe/Tallinn')
     {
-        return XMLGenerator::paymentInitiationXML($this->data, $this->configuration);
-    }
+        $defaultTimeZone = date_default_timezone_get();
+        date_default_timezone_set($timezone);
+        $xml = XMLGenerator::paymentInitiationXML($this->data, $this->configuration);
+        date_default_timezone_set($defaultTimeZone);
 
+        return $xml;
+    }
 }

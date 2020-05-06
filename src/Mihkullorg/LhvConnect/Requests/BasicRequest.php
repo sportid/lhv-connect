@@ -5,8 +5,8 @@ namespace Mihkullorg\LhvConnect\Requests;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 
-abstract class BasicRequest {
-
+abstract class BasicRequest
+{
     protected $url;
     protected $method;
     protected $client;
@@ -16,7 +16,6 @@ abstract class BasicRequest {
 
     public function __construct(Client $client, $configuration, $body = null, $headers = [])
     {
-        date_default_timezone_set('Europe/Istanbul');
         $this->client = $client;
         $this->configuration = $configuration;
         $this->headers = $headers;
