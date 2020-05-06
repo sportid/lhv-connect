@@ -14,9 +14,13 @@ class PaymentInitiationRequest extends FullRequest {
      *
      * @return string
      */
-    public function getXML()
+    public function getXML($timezone = 'Europe/Tallinn')
     {
-        return XMLGenerator::paymentInitiationXML($this->data, $this->configuration);
-    }
+        $defaultTimeZone = date_default_timezone_get();
+        date_default_timezone_set('Europe/Tallinn');
+        $xml = XMLGenerator::paymentInitiationXML($this->data, $this->configuration);
+        date_default_timezone_set($defaultTimeZone);
 
+        return $xml;
+    }
 }

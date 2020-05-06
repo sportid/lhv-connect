@@ -30,6 +30,5 @@ abstract class FullRequest extends BasicRequest {
      *
      * @return string
      */
-    public abstract function getXML();
-
+    public abstract function getXML($timezone = 'Europe/Tallinn');
 }
