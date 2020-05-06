@@ -17,7 +17,7 @@ class PaymentInitiationRequest extends FullRequest
     public function getXML($timezone = 'Europe/Tallinn')
     {
         $defaultTimeZone = date_default_timezone_get();
-        date_default_timezone_set('Europe/Tallinn');
+        date_default_timezone_set($timezone);
         $xml = XMLGenerator::paymentInitiationXML($this->data, $this->configuration);
         date_default_timezone_set($defaultTimeZone);
 
