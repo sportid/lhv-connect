@@ -10,6 +10,8 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Mihkullorg\LhvConnect\LhvConnect;
 use Mihkullorg\LhvConnect\Requests\HeartbeatGetRequest;
 use PHPUnit_Framework_TestCase;
@@ -127,19 +129,19 @@ class LhvConnectTest extends PHPUnit_Framework_TestCase {
                 'id'            => 1,
                 'currency'      => 'EUR',
                 'sum'           => rand(1,250),
-                'name'          => str_random(),
-                'IBAN'          => str_random(),
-                'description'   => str_random(),
-                'ref_nr'        => str_random(),
+                'name'          => Str::random(),
+                'IBAN'          => Str::random(),
+                'description'   => Str::random(),
+                'ref_nr'        => Str::random(),
             ],
             [
                 'id'            => 2,
                 'currency'      => 'EUR',
                 'sum'           => rand(1,250),
-                'name'          => str_random(),
-                'IBAN'          => str_random(),
-                'description'   => str_random(),
-                'ref_nr'        => str_random(),
+                'name'          => Str::random(),
+                'IBAN'          => Str::random(),
+                'description'   => Str::random(),
+                'ref_nr'        => Str::random(),
             ],
         ];
 
@@ -147,7 +149,7 @@ class LhvConnectTest extends PHPUnit_Framework_TestCase {
 
         $xml = $lhv->getPaymentInitiationXML(['payments' => $payments, 'initiator' => $conf['initiator']]);
 
-        $sum = array_sum(array_pluck($payments, 'sum'));
+        $sum = array_sum(Arr::pluck($payments, 'sum'));
 
         $correctXml = $this->getPaymentInitiationRequestXML($conf, $payments, $sum);
 

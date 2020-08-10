@@ -2,6 +2,8 @@
 
 namespace Mihkullorg\LhvConnect;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use DateTime;
 use SimpleXMLElement;
 
@@ -54,7 +56,7 @@ class XMLGenerator
 xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
 xsi:schemaLocation=\"urn:iso:std:iso:20022:tech:xsd:pain.001.001.03 pain.001.001.03.xsd\"><$xmlTag></$xmlTag></Document>");
 
-        self::array_to_xml(self::generatePaymentInitiationGroupHeaderXml(count($data['payments']), $sum, array_get($data, 'initiator', '')), $xml->$xmlTag);
+        self::array_to_xml(self::generatePaymentInitiationGroupHeaderXml(count($data['payments']), $sum, Arr::get($data, 'initiator', '')), $xml->$xmlTag);
 
         foreach ($data['payments'] as $payment) {
             self::array_to_xml(self::generatePaymentInitiationPaymentXml($payment, $configuration), $xml->$xmlTag);
@@ -131,7 +133,7 @@ xsi:schemaLocation=\"urn:iso:std:iso:20022:tech:xsd:pain.001.001.03 pain.001.001
     {
         return [
             "GROUP_HEADER" => [
-                "MESSAGE_IDENTIFICATION" => str_random(16),
+                "MESSAGE_IDENTIFICATION" => Str::random(16),
                 "CREATION_DATETIME" => (new DateTime())->format(DateTime::ATOM),
                 "NUMBER_OF_TRANSACTIONS" => $count,
                 "CONTROL_SUM" => $sum,
